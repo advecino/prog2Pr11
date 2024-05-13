@@ -1,7 +1,3 @@
-//
-// Created by advecino on 13/05/2024.
-//
-
 #ifndef DESKTOP_BIBLIOGRAFIA_H
 #define DESKTOP_BIBLIOGRAFIA_H
 
@@ -44,5 +40,11 @@ void copiarBibliografia(tbibliografia b, tbibliografia &b1);
 void mostrarBibliografia(tbibliografia b);
 //{Pre: b es una bibliografía ya iniciada}
 //{Post: muestra los libros almacenados en la bibliografía b, b no se modifica}
+
+void modificarAnnoLibro(tbibliografia &b, char ISBN[], int anio);
+
+bool existe (tbibliografia b, char ISBN[]);
+
+void masNuevo(tbibliografia b, libro & l);
 
 #endif //DESKTOP_BIBLIOGRAFIA_H

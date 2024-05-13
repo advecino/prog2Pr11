@@ -1,9 +1,5 @@
-//
-// Created by advecino on 13/05/2024.
-//
-
 #include "Bibliografia.h"
-
+#include "usaLibro.cpp"
 #include <cstring>
 
 using namespace std;
@@ -14,29 +10,40 @@ void iniciar(tbibliografia &b){
 }
 
 void anadir(tbibliografia &b, libro l){
-    Nodo *nuevo;
-    Nodo *aux;
-    Nodo* anterior;
-    char isbn[10],isbnaux[10];
-    nuevo = new Nodo;
-    anterior = nullptr;
-    aux = b;
-    obtenerISBN(l,isbn);
-    copiarLibro(l,nuevo->dato);
-    obtenerISBN(aux->dato,isbnaux);
-    while (aux != nullptr && strcmp(isbnaux, isbn) < 0) {
-        anterior = aux;
-        aux = aux->sig;
-        obtenerISBN(aux->dato,isbnaux);
-    }
-    nuevo->sig=aux;
-    if(anterior==nullptr){
-        b=nuevo;
-    }
-    else{
-        anterior->sig=nuevo;
+    Nodo *nuevo = new Nodo; // Asignación de memoria para el nuevo nodo
+    copiarLibro(l, nuevo->dato); // Copia del libro en el nuevo nodo
+    nuevo->sig = nullptr; // Establecer el siguiente nodo del nuevo nodo como nullptr
+
+    if (b == nullptr) { // Si la lista está vacía
+        b = nuevo; // El nuevo nodo se convierte en el primer nodo de la lista
+    } else {
+        Nodo *aux = b;
+        Nodo *anterior = nullptr;
+
+        while (aux != nullptr) {
+            char isbn[10];
+            char isbnaux[10];
+            obtenerISBN(aux->dato, isbnaux);
+            obtenerISBN(l, isbn);
+
+            if (strcmp(isbnaux, isbn) >= 0) { // Si el ISBN del libro actual es mayor o igual al ISBN del nuevo libro
+                break; // Salir del bucle
+            }
+
+            anterior = aux;
+            aux = aux->sig;
+        }
+
+        if (anterior == nullptr) { // Si el nuevo nodo se inserta al principio de la lista
+            nuevo->sig = b; // El siguiente nodo del nuevo nodo es el nodo actual de la lista
+            b = nuevo; // El nuevo nodo se convierte en el primer nodo de la lista
+        } else { // Si el nuevo nodo se inserta en el medio o al final de la lista
+            nuevo->sig = aux; // El siguiente nodo del nuevo nodo es el nodo actual de la lista
+            anterior->sig = nuevo; // El siguiente nodo del nodo anterior es el nuevo nodo
+        }
     }
 }
+
 
 void eliminar(tbibliografia &b, char ISBN[]){
     Nodo *aux;
@@ -109,3 +116,58 @@ void mostrarBibliografia(tbibliografia b){
         aux = aux->sig;
     }
 }
+
+bool existe (tbibliografia b, char ISBN[])
+//{Pre: b es una bibliografía iniciada}
+//{Post: Devuelve true si en la bibliografía b hay un libro cuyo ISBN es ISBN, y devuelve false en caso contrario.}{
+{
+    libro l;
+    bool encontrado = false;
+    int numLibros = numeroLibros(b);
+    char isbn[10];
+    for (int i = 0; i < numLibros; ++i) {
+        extraerPosicion(b, i, l);
+        obtenerISBN(l,isbn);
+        if (strcmp(isbn, ISBN) == 0) {
+            encontrado = true;
+            break;
+        }
+    }
+    return encontrado;
+}
+
+
+void modificarAnnoLibro(tbibliografia &b, char ISBN[], int anio)
+//{Pre: ISBN es un ISBN de los libros de la bibliografía b}
+//{Post: Modifica el año de publicación del libro de la bibliografía b cuyo ISBN es ISBN poniendo como nuevo año de publicación anio.}
+{
+    libro l;
+    int numLibros = numeroLibros(b);
+    for (int i = 0; i < numLibros; ++i) {
+        extraerPosicion(b, i, l);
+        char isbn_temp[10];
+        obtenerISBN(l, isbn_temp);
+        if (strcmp(isbn_temp, ISBN) == 0) {
+            modificarAnioLibro(l, anio);
+            eliminar(b, ISBN);
+            anadir(b, l);
+            break;
+        }
+    }
+}
+void masNuevo(tbibliografia b, libro & l)
+//{Pre: la bibliografía b no debe estar vacía}
+//{Post: l es el libro cuyo año de publicación es el mayor de la bibliografía b. En caso de haber varios libros con el mismo año de publicación, solo devuelve uno.}
+{
+    libro temp;
+    l.anno = 0; // Inicializar año con un valor muy pequeño
+    int anno,anno2;
+    int numLibros = numeroLibros(b);
+    for (int i = 0; i < numLibros; ++i) {
+        extraerPosicion(b, i, temp);
+        obteneranno(temp,anno);
+        obteneranno(l,anno2);
+        if (anno > anno2){
+            copiarLibro(temp, l);
+        }
+    }}
