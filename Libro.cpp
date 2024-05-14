@@ -15,15 +15,15 @@ void modificarAnioLibro(libro l,int annoNew){
 }
 
 void obtenerTitulo(libro l,char titulo[]){
-    strcpy(l.titulo,titulo);
+    strcpy(titulo,l.titulo);
 }
 
-void obteneranno(libro l,int anno){
+void obteneranno(libro l,int &anno){
     anno=l.anno;
 }
 
 void obtenerISBN(libro l,char ISBN[]){
-    strcpy(l.ISBN,ISBN);
+    strcpy(ISBN,l.ISBN);
 }
 
 void copiarLibro(libro l, libro &copia){

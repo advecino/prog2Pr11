@@ -11,28 +11,26 @@ void iniciar(tbibliografia &b){
 
 void anadir(tbibliografia &b, libro l) {
     Nodo *nuevo = new Nodo;
-    nuevo->dato = l;
-    nuevo->sig = nullptr;
+    copiarLibro(l,nuevo->dato);
     Nodo *aux = b;
     Nodo *anterior = nullptr;
     char isbn[10],isbnaux[10];
     obtenerISBN(l,isbn);
-    if(aux!= nullptr){
+
+    if(aux!=nullptr){
         obtenerISBN(aux->dato,isbnaux);
-        while (aux != nullptr && strcmp(isbnaux, isbn) < 0) {
+    while (aux != nullptr && strcmp(isbnaux, isbn) < 0) {
             anterior = aux;
             aux = aux->sig;
             if(aux != nullptr)
                 obtenerISBN(aux->dato,isbnaux);
-        }
     }
-
+    }
     nuevo->sig = aux;
-    if (anterior != nullptr)
-        anterior->sig = nuevo;
-    else
+    if (anterior == nullptr)
         b = nuevo;
-
+    else
+        anterior->sig = nuevo;
 }
 
 void eliminar(tbibliografia &b, char ISBN[]){

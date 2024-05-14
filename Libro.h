@@ -14,7 +14,7 @@ void modificarAnioLibro(libro l,int annoNew);
 
 void obtenerTitulo(libro l,char titulo[]);
 
-void obteneranno(libro l,int anno);
+void obteneranno(libro l,int &anno);
 
 void obtenerISBN(libro l,char ISBN[]);
 
