@@ -9,41 +9,31 @@ void iniciar(tbibliografia &b){
     b=nullptr;
 }
 
-void anadir(tbibliografia &b, libro l){
-    Nodo *nuevo = new Nodo; // Asignación de memoria para el nuevo nodo
-    copiarLibro(l, nuevo->dato); // Copia del libro en el nuevo nodo
-    nuevo->sig = nullptr; // Establecer el siguiente nodo del nuevo nodo como nullptr
-
-    if (b == nullptr) { // Si la lista está vacía
-        b = nuevo; // El nuevo nodo se convierte en el primer nodo de la lista
-    } else {
-        Nodo *aux = b;
-        Nodo *anterior = nullptr;
-
-        while (aux != nullptr) {
-            char isbn[10];
-            char isbnaux[10];
-            obtenerISBN(aux->dato, isbnaux);
-            obtenerISBN(l, isbn);
-
-            if (strcmp(isbnaux, isbn) >= 0) { // Si el ISBN del libro actual es mayor o igual al ISBN del nuevo libro
-                break; // Salir del bucle
-            }
-
+void anadir(tbibliografia &b, libro l) {
+    Nodo *nuevo = new Nodo;
+    nuevo->dato = l;
+    nuevo->sig = nullptr;
+    Nodo *aux = b;
+    Nodo *anterior = nullptr;
+    char isbn[10],isbnaux[10];
+    obtenerISBN(l,isbn);
+    if(aux!= nullptr){
+        obtenerISBN(aux->dato,isbnaux);
+        while (aux != nullptr && strcmp(isbnaux, isbn) < 0) {
             anterior = aux;
             aux = aux->sig;
-        }
-
-        if (anterior == nullptr) { // Si el nuevo nodo se inserta al principio de la lista
-            nuevo->sig = b; // El siguiente nodo del nuevo nodo es el nodo actual de la lista
-            b = nuevo; // El nuevo nodo se convierte en el primer nodo de la lista
-        } else { // Si el nuevo nodo se inserta en el medio o al final de la lista
-            nuevo->sig = aux; // El siguiente nodo del nuevo nodo es el nodo actual de la lista
-            anterior->sig = nuevo; // El siguiente nodo del nodo anterior es el nuevo nodo
+            if(aux != nullptr)
+                obtenerISBN(aux->dato,isbnaux);
         }
     }
-}
 
+    nuevo->sig = aux;
+    if (anterior != nullptr)
+        anterior->sig = nuevo;
+    else
+        b = nuevo;
+
+}
 
 void eliminar(tbibliografia &b, char ISBN[]){
     Nodo *aux;
