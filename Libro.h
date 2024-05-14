@@ -18,10 +18,10 @@ void obteneranno(libro l,int &anno);
 
 void obtenerISBN(libro l,char ISBN[]);
 
+
 void copiarLibro(libro l, libro &copia);
-
 void mostrarLibro(libro l);
-
 void leerLibro(libro &l);
+
 
 #endif //DESKTOP_LIBRO_H

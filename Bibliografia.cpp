@@ -32,31 +32,50 @@ void anadir(tbibliografia &b, libro l) {
         anterior->sig = nuevo;
 }
 
-void eliminar(tbibliografia &b, char ISBN[]){
-    Nodo *aux;
-    Nodo* anterior;
-    char isbn[10];
-    obtenerISBN(aux->dato,isbn);
-    while(aux!=nullptr && strcmp(isbn,ISBN)!=0){
-        anterior=aux;
-        aux=aux->sig;
-        obtenerISBN(aux->dato,isbn);
-    }
-    anterior->sig=aux->sig;
-    delete(aux);
-}
 
-void extraerISBN(tbibliografia b, char ISBN[], libro & l){
-    Nodo * aux;
-    aux=b;
+void eliminar(tbibliografia &b, char ISBN[]) {
+    if (b == nullptr)
+        return;
+    Nodo *aux = b;
+    Nodo *anterior = nullptr;
     char isbnaux[10];
-    obtenerISBN(aux->dato,isbnaux);
-    while(aux!=nullptr && strcmp(isbnaux,ISBN)==0){
+    if(aux!=nullptr){
+        obtenerISBN(aux->dato,isbnaux);
+    while(strcmp(isbnaux,ISBN)!=0) {
+        anterior = aux;
         aux = aux->sig;
         obtenerISBN(aux->dato,isbnaux);
     }
-    copiarLibro(aux->dato,l);
+    }
+
+    if (aux == nullptr)
+        return;
+
+    if (anterior != nullptr)
+        anterior->sig = aux->sig;
+    else
+        b = aux->sig;
+
+    delete aux;
 }
+
+void extraerISBN(tbibliografia b, char ISBN[], libro & l) {
+    if (b == nullptr) {
+        return;
+    }
+
+    Nodo *aux = b;
+
+    while (aux != nullptr) {
+        if (strcmp(aux->dato.ISBN, ISBN) == 0) {
+            l = aux->dato; // Copia el libro encontrado
+            return;
+        }
+        aux = aux->sig;
+    }
+
+}
+
 
 void extraerPosicion(tbibliografia b, int pos, libro & l){
     Nodo * aux;
@@ -85,12 +104,14 @@ int numeroLibros (tbibliografia b){
 }
 
 void copiarBibliografia(tbibliografia b, tbibliografia &b1){
-    Nodo * aux;
-    aux=b;
+    if (b == nullptr) {
+        b1 = nullptr;
+        return;
+    }
     iniciar(b1);
-    while(aux!=nullptr){
-        b1=b1->sig;
-        b1= aux;
+    Nodo *aux = b;
+    while (aux != nullptr) {
+        anadir(b1, aux->dato);
         aux = aux->sig;
     }
 }

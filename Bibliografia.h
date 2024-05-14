@@ -4,6 +4,7 @@
 #include "Libro.h"
 
 
+
 struct Nodo {
     libro dato;
     Nodo * sig;
@@ -41,10 +42,5 @@ void mostrarBibliografia(tbibliografia b);
 //{Pre: b es una bibliografía ya iniciada}
 //{Post: muestra los libros almacenados en la bibliografía b, b no se modifica}
 
-void modificarAnnoLibro(tbibliografia &b, char ISBN[], int anio);
-
-bool existe (tbibliografia b, char ISBN[]);
-
-void masNuevo(tbibliografia b, libro & l);
 
 #endif //DESKTOP_BIBLIOGRAFIA_H
