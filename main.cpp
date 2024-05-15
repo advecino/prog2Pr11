@@ -1,12 +1,15 @@
 #include <iostream>
 #include "Bibliografia.h"
-#include <cstring>
 
 using namespace std;
 
 void modificarAnnoLibro(tbibliografia &b, char ISBN[], int anio);
 void masNuevo(tbibliografia b, libro & l);
 bool existe (tbibliografia b, char ISBN[]);
+void copiarLibro(libro l, libro &copia);
+void mostrarLibro(libro l);
+void leerLibro(libro &l);
+
 
 
 int main() {
@@ -74,15 +77,16 @@ int main() {
             case 6: {
                 cout << "Introduzca el año a ISBN del libro a eliminar: "<<endl;
                 cin >> isbn;
-                eliminar(b,isbn);
+                if(existe(b,isbn)){
+                eliminar(b,isbn);}
                 break;
             }
             case 7: {
-                // Agrega tu código para la opción 7 aquí
+                cout << "El numero de libros: "<< numeroLibros(b)<<endl;
                 break;
             }
             case 8: {
-                // Agrega tu código para la opción 8 aquí
+                copiarBibliografia(b,b2);
                 break;
             }
             case 9: {

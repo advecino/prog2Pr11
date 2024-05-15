@@ -3,6 +3,9 @@
 
 using namespace std;
 
+void copiarLibro(libro l, libro &copia);
+void mostrarLibro(libro l);
+void leerLibro(libro &l);
 
 void iniciar(tbibliografia &b){
     b=nullptr;
@@ -60,20 +63,16 @@ void eliminar(tbibliografia &b, char ISBN[]) {
 }
 
 void extraerISBN(tbibliografia b, char ISBN[], libro & l) {
-    if (b == nullptr) {
-        return;
-    }
-
     Nodo *aux = b;
-
-    while (aux != nullptr) {
-        if (strcmp(aux->dato.ISBN, ISBN) == 0) {
-            l = aux->dato; // Copia el libro encontrado
-            return;
-        }
+    char isbn[10];
+    obtenerISBN(aux->dato,isbn);
+    while (aux != nullptr && strcmp(isbn,ISBN)!=0){
         aux = aux->sig;
+        if (aux!=nullptr) {
+            obtenerISBN(aux->dato,isbn);
+        }
     }
-
+    copiarLibro(aux->dato,l);
 }
 
 
