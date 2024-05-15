@@ -2,7 +2,7 @@
 #include <iostream>
 
 using namespace std;
-
+//
 void copiarLibro(libro l, libro &copia){
     char isbn[10],titulo[30];
     int anno;

@@ -2,7 +2,7 @@
 #include <cstring>
 
 using namespace std;
-
+//
 void crearLibro(libro &l,char ISBN[],char titulo[],int anno){
     strcpy(l.ISBN,ISBN);
     strcpy(l.titulo,titulo);

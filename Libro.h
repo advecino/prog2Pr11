@@ -7,7 +7,7 @@ struct libro {
     char titulo[30];
     int anno;
 };
-
+//
 void crearLibro(libro &l,char ISBN[],char titulo[],int anno);
 
 void modificarAnioLibro(libro l,int annoNew);

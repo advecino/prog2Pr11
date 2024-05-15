@@ -1,6 +1,6 @@
 #include "Bibliografia.h"
 #include <cstring>
-
+//
 bool existe (tbibliografia b, char ISBN[])
 //{Pre: b es una bibliografía iniciada}
 //{Post: Devuelve true si en la bibliografía b hay un libro cuyo ISBN es ISBN, y devuelve false en caso contrario.}{

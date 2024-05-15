@@ -2,7 +2,7 @@
 #include "Bibliografia.h"
 
 using namespace std;
-
+//
 void modificarAnnoLibro(tbibliografia &b, char ISBN[], int anio);
 void masNuevo(tbibliografia b, libro & l);
 bool existe (tbibliografia b, char ISBN[]);

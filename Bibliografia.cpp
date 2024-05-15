@@ -2,7 +2,7 @@
 #include <cstring>
 
 using namespace std;
-
+//
 void copiarLibro(libro l, libro &copia);
 void mostrarLibro(libro l);
 void leerLibro(libro &l);
